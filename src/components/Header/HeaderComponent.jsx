@@ -6,7 +6,7 @@ import {
   TitleHeader,
   SloganTitle,
   ButtonLogin,
-  ImageHeader
+//   ImageHeader
 } from "./Style";
 
 export const HeaderComponent = () => {
@@ -23,7 +23,7 @@ export const HeaderComponent = () => {
       </ContainerLeft>
 
       <ContainerRight>
-        <ImageHeader />
+        {/* <ImageHeader /> */}
       </ContainerRight>
     </ContainerHeader>
   );

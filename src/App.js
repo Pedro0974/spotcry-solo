@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter basename="/spoticry-front">
+      <BrowserRouter basename="/">
         <Router />
       </BrowserRouter>
     </>
