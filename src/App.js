@@ -1,14 +1,14 @@
-import { BrowserRouter } from "react-router-dom";
 import Router from "./routes/Router";
 import GlobalStyle from "./styles/Styles";
+import GlobalState from "./store/globalState";
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter basename="/">
+      <GlobalState>
         <Router />
-      </BrowserRouter>
+      </GlobalState>
     </>
 
   );
