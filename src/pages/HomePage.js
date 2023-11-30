@@ -1,11 +1,15 @@
 import React from "react";
 import { HeaderComponent } from "../components/Header/HeaderComponent";
+import NavBarLandingpage from "../components/NavBarLandingpage/NavBarLandingpage";
 
-export const HomePage = () => {
+const HomePage = () => {
 
     return (
         <div>
+            <NavBarLandingpage />
             <HeaderComponent />
         </div>
     )
 }
+
+export default HomePage;

@@ -1,13 +1,14 @@
-import Router from "./routes/Router";
+import AppRouter from "./routes/Router";
 import GlobalStyle from "./styles/Styles";
 import GlobalState from "./store/globalState";
+
 
 function App() {
   return (
     <>
       <GlobalStyle />
       <GlobalState>
-        <Router />
+        <AppRouter />
       </GlobalState>
     </>
 

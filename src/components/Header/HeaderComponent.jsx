@@ -6,7 +6,6 @@ import {
   TitleHeader,
   SloganTitle,
   ButtonLogin,
-//   ImageHeader
 } from "./Style";
 
 export const HeaderComponent = () => {
