@@ -1,40 +1,41 @@
-import React, { useEffect, useState} from "react";
-import {
-    ContainerNavBar,
-    ImageLogoNav,
-    Navegations,
-    LinksNav
-} from './Style';
-import logo from '../../_assets/logo.png'
-
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ContainerNavBar, ImageLogoNav, Navegations, LinksNav } from "./Style";
+import logo from "../../_assets/logo.png";
+import { goToLoginPage } from "caminho/do/seu/Router";
 const NavBarLandingpage = () => {
+  const [isGlassEffect, setIsGlassEffect] = useState(false);
+  const navigate = useNavigate();
 
-    const [isGlassEffect, setIsGlassEffect] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const threshold = 300;
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
-            const threshold = 300;
+      setIsGlassEffect(scrollY > threshold);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
-            setIsGlassEffect(scrollY > threshold);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+  const handleLoginButtonClick = () => {
+    goToLoginPage(navigate);
+  };
 
-    return (
-        <ContainerNavBar glassEffect={isGlassEffect}>
-            <ImageLogoNav src={logo} alt="logo nav bar" />
-            <Navegations> 
-                <LinksNav>Home</LinksNav>
-                <LinksNav>Prices</LinksNav>
-                <LinksNav isLoginButton>Login</LinksNav>
-            </Navegations>
-        </ContainerNavBar>
-    )
-
-}
+  return (
+    <ContainerNavBar glassEffect={isGlassEffect}>
+      <ImageLogoNav src={logo} alt="logo nav bar" />
+      <Navegations>
+        <LinksNav>Home</LinksNav>
+        <LinksNav>Prices</LinksNav>
+        <LinksNav isLoginButton onClick={handleLoginButtonClick}>
+          Login
+        </LinksNav>
+      </Navegations>
+    </ContainerNavBar>
+  );
+};
 
 export default NavBarLandingpage;

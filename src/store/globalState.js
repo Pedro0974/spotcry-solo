@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   getPlaylistsFromUser,
   createPlaylist,
@@ -20,9 +20,30 @@ const GlobalStateContext = React.createContext();
 
 const GlobalState = (props) => {
   // Criação de todos os estados globais
+  const [isLoading, setIsLoading] = useState(
+    localStorage.getItem("isLoading") === "true" || false
+  );
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const [playlistList, setPlaylistList] = useState([]);
   const [songsList, setSongsList] = useState([]);
+
+  useEffect(() => {
+    // Adiciona um listener para o evento de mudança no localStorage
+    const handleStorageChange = () => {
+      setIsLoading(localStorage.getItem("isLoading") === "true" || false);
+    };
+
+    // Verifica o valor inicial quando o componente monta
+    handleStorageChange();
+
+    // Adiciona o listener para o evento de mudança no localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    // Remove o listener quando o componente desmonta para evitar vazamentos de memória
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   // Criação de todas as requisições feitas na aplicação
 

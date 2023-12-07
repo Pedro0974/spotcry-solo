@@ -1,10 +1,11 @@
 import React from "react";
+import NavBarApp from "../components/NavBarApp/NavBarApp";
 
 const FeedPage = () => {
 
     return (
         <div>
-            <h1 className="bg-red-300">Olá Mundo Testando Tailwindcss</h1>
+            <NavBarApp />
         </div>
     )
 }
