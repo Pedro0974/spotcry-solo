@@ -16,34 +16,12 @@ import {
 } from "../services/songs";
 
 import { login } from '../services/users'
-const GlobalStateContext = React.createContext();
+export const GlobalStateContext = React.createContext();
 
 const GlobalState = (props) => {
-  // Criação de todos os estados globais
-  const [isLoading, setIsLoading] = useState(
-    localStorage.getItem("isLoading") === "true" || false
-  );
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const [playlistList, setPlaylistList] = useState([]);
   const [songsList, setSongsList] = useState([]);
-
-  useEffect(() => {
-    // Adiciona um listener para o evento de mudança no localStorage
-    const handleStorageChange = () => {
-      setIsLoading(localStorage.getItem("isLoading") === "true" || false);
-    };
-
-    // Verifica o valor inicial quando o componente monta
-    handleStorageChange();
-
-    // Adiciona o listener para o evento de mudança no localStorage
-    window.addEventListener("storage", handleStorageChange);
-
-    // Remove o listener quando o componente desmonta para evitar vazamentos de memória
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
 
   // Criação de todas as requisições feitas na aplicação
 
@@ -55,15 +33,17 @@ const GlobalState = (props) => {
 
   // requisições relacionadas a playlist
   // buscar playlist do usuario
-  const playlistFromUser = (userId) => {
-    getPlaylistsFromUser(userId);
+  const playlistFromUser = async () => {
+    const playlists = await getPlaylistsFromUser();
+    setPlaylistList(playlists);
   };
 
   // criar playlist do usuario
-  const createPlaylistFromUser = (token, playlistData) => {
-    createPlaylist(token, playlistData);
+  const createPlaylistFromUser = async (token, playlistData) => {
+    await createPlaylist(token, playlistData);
+    // Atualizar a lista de playlists após a criação
+    await playlistFromUser();
   };
-
   // adicionar musica a uma playlist especifica
   const addSongAtPlaylist = (token, playlistId, songId) => {
     addSongToPlaylist(token, playlistId, songId);
@@ -86,13 +66,15 @@ const GlobalState = (props) => {
 
   // requisições relacionadas as musicas
   // busca lista de musicas
-  const songsListRequest = (token) => {
-    getAllSongs(token);
+  const songsListRequest = async (token) => {
+    const songs = await getAllSongs(token);
+    setSongsList(songs);
   };
 
   // adicionar uma nova musica
-  const createNewSong = (token, songData) => {
-    createSong(token, songData);
+  const createNewSong = async (token, songData) => {
+    await createSong(token, songData);
+    await songsListRequest()
   };
 
   // buscar uma musica especifica

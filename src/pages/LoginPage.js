@@ -1,11 +1,15 @@
 import React from "react";
+import {
+    ContainerLoginPage
+} from './Styles/Styles'
+import {LoginForm} from '../components/LoginForm/LoginFormComponent'
 
 const LoginPage = () => {
 
     return (
-        <div>
-            <h1 className="bg-red-300">Olá Mundo Testando Tailwindcss</h1>
-        </div>
+        <ContainerLoginPage>
+            <LoginForm />
+        </ContainerLoginPage>
     )
 }
 

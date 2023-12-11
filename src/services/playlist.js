@@ -2,11 +2,12 @@ import axios from "axios";
 import { BASE_URL } from "../constants/urls";
 import { getTokenData } from "./getTokenData";
 
-export const getPlaylistsFromUser = ({ userId }) => {
+export const getPlaylistsFromUser = () => {
   const token = localStorage.getItem("token");
-  userId = getTokenData(token).id;
+  const userId = getTokenData(token).id;
+  // userId = getTokenData(token).id;
   // .get(`${BASE_URL}user/${userId}/playlists`, {
-  return axios.get(`${BASE_URL}playlist`, {
+  return axios.get(`${BASE_URL}user/${userId}/playlists`, {
     headers: {
       Authorization: token,
     },
@@ -16,7 +17,17 @@ export const getPlaylistsFromUser = ({ userId }) => {
 // Criação da playlist do usuario
 export const createPlaylist = async (token, playlistData) => {
   try {
-    const response = await axios.post(BASE_URL, playlistData, {
+    const userId = getTokenData(token).id;
+    
+    // Adicione o ID do usuário ao corpo da requisição
+    const requestData = {
+      userId,
+      description: playlistData.description,
+      name: playlistData.name,
+      songs: [],
+    };
+
+    const response = await axios.post(`${BASE_URL}playlist`, requestData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: token,
@@ -29,6 +40,7 @@ export const createPlaylist = async (token, playlistData) => {
     throw error;
   }
 };
+
 
 // Função para adicionar uma música a uma playlist específica
 export const addSongToPlaylist = async (token, playlistId, songId) => {

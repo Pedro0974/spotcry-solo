@@ -4,13 +4,13 @@ import { BASE_URL } from "../constants/urls";
 // Função para obter todas as músicas disponíveis
 export const getAllSongs = async (token) => {
   try {
-    const response = await axios.get(BASE_URL, {
+    const response = await axios.get(`${BASE_URL}song`, {
       headers: {
         Authorization: token,
       },
     });
 
-    return response.data;
+    return response.data.songs;
   } catch (error) {
     console.error("Erro na requisição:", error);
     throw error;
